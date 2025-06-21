@@ -1,0 +1,6 @@
+<!-- Favicon for web -->
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <rect width="48" height="48" fill="#4CAF50" rx="8"/>
+  <circle cx="24" cy="24" r="12" fill="white"/>
+  <path d="M24 16 L24 32 M16 24 L32 24" stroke="#4CAF50" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,11 @@
+<!-- Placeholder SVG for splash screen -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1242" height="2688" viewBox="0 0 1242 2688">
+  <rect width="1242" height="2688" fill="#4CAF50"/>
+  <g transform="translate(621, 1344)">
+    <circle cx="0" cy="-200" r="120" fill="white" opacity="0.9"/>
+    <path d="M0 -280 L0 -120 M-80 -200 L80 -200" stroke="#4CAF50" stroke-width="16" stroke-linecap="round"/>
+    <text x="0" y="100" text-anchor="middle" fill="white" font-family="Arial" font-size="48" font-weight="bold">HealthEvo</text>
+    <text x="0" y="160" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial" font-size="24">Kesehatan Balita</text>
+    <text x="0" y="220" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="Arial" font-size="20">Cegah Stunting & Obesitas</text>
+  </g>
+</svg>
