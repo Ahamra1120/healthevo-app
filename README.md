@@ -213,7 +213,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 📞 Contact
 
-Project Link: [https://github.com/yourusername/healthevo-react-native](https://github.com/yourusername/healthevo-react-native)
+Project Link: [https://github.com/Ahamra1120/healthevo-app](https://github.com/Ahamra1120/healthevo-app)
 
 ## 🙏 Acknowledgments
 
