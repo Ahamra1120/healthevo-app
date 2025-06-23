@@ -25,13 +25,19 @@
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "package": "com.ahamra1120.healthevoreactnative"
     },
     "web": {
       "favicon": "./assets/favicon.svg"
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "25de758f-5211-4ffe-a08d-75b24e0f632e"
+      }
+    }
   }
 }
