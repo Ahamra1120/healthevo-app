@@ -289,16 +289,68 @@
     <script>
         // Data KMS untuk Berat Badan
         const weightDataLaki = [
-            { umur: 0, bbSangatKurang: 2, bbKurang: 2.4, bbIdealMin: 2.5, bbIdealMax: 3.9, bbBerlebih: 4 },
-            { umur: 3, bbSangatKurang: 4.3, bbKurang: 4.9, bbIdealMin: 5, bbIdealMax: 7.2, bbBerlebih: 7.3 },
-            { umur: 6, bbSangatKurang: 5.6, bbKurang: 6.3, bbIdealMin: 6.4, bbIdealMax: 8.8, bbBerlebih: 8.9 },
-            { umur: 12, bbSangatKurang: 6.8, bbKurang: 7.6, bbIdealMin: 7.7, bbIdealMax: 10.8, bbBerlebih: 10.9 },
-            { umur: 18, bbSangatKurang: 7.7, bbKurang: 8.7, bbIdealMin: 8.8, bbIdealMax: 12.2, bbBerlebih: 12.3 },
-            { umur: 24, bbSangatKurang: 8.5, bbKurang: 9.6, bbIdealMin: 9.7, bbIdealMax: 13.6, bbBerlebih: 13.7 },
-            { umur: 36, bbSangatKurang: 9.9, bbKurang: 11.2, bbIdealMin: 11.3, bbIdealMax: 16.2, bbBerlebih: 16.3 },
-            { umur: 48, bbSangatKurang: 11.1, bbKurang: 12.6, bbIdealMin: 12.7, bbIdealMax: 18.6, bbBerlebih: 18.7 },
-            { umur: 60, bbSangatKurang: 12.3, bbKurang: 14, bbIdealMin: 14.1, bbIdealMax: 21, bbBerlebih: 21.1 }
-        ];
+    { umur: 0, bbSangatKurang: 2, bbKurang: 2.4, bbIdealMin: 2.5, bbIdealMax: 3.9, bbBerlebih: 4 },
+    { umur: 1, bbSangatKurang: 2.8, bbKurang: 3.3, bbIdealMin: 3.4, bbIdealMax: 5.1, bbBerlebih: 5.2 },
+    { umur: 2, bbSangatKurang: 3.7, bbKurang: 4.2, bbIdealMin: 4.3, bbIdealMax: 6.3, bbBerlebih: 6.4 },
+    { umur: 3, bbSangatKurang: 4.3, bbKurang: 4.9, bbIdealMin: 5, bbIdealMax: 7.2, bbBerlebih: 7.3 },
+    { umur: 4, bbSangatKurang: 4.8, bbKurang: 5.5, bbIdealMin: 5.6, bbIdealMax: 7.8, bbBerlebih: 7.9 },
+    { umur: 5, bbSangatKurang: 5.2, bbKurang: 5.9, bbIdealMin: 6, bbIdealMax: 8.4, bbBerlebih: 8.5 },
+    { umur: 6, bbSangatKurang: 5.6, bbKurang: 6.3, bbIdealMin: 6.4, bbIdealMax: 8.8, bbBerlebih: 8.9 },
+    { umur: 7, bbSangatKurang: 5.8, bbKurang: 6.6, bbIdealMin: 6.7, bbIdealMax: 9.2, bbBerlebih: 9.3 },
+    { umur: 8, bbSangatKurang: 6.1, bbKurang: 6.8, bbIdealMin: 6.9, bbIdealMax: 9.6, bbBerlebih: 9.7 },
+    { umur: 9, bbSangatKurang: 6.3, bbKurang: 7, bbIdealMin: 7.1, bbIdealMax: 9.9, bbBerlebih: 10 },
+    { umur: 10, bbSangatKurang: 6.5, bbKurang: 7.3, bbIdealMin: 7.4, bbIdealMax: 10.2, bbBerlebih: 10.3 },
+    { umur: 11, bbSangatKurang: 6.7, bbKurang: 7.5, bbIdealMin: 7.6, bbIdealMax: 10.5, bbBerlebih: 10.6 },
+    { umur: 12, bbSangatKurang: 6.8, bbKurang: 7.6, bbIdealMin: 7.7, bbIdealMax: 10.8, bbBerlebih: 10.9 },
+    { umur: 13, bbSangatKurang: 7, bbKurang: 7.8, bbIdealMin: 7.9, bbIdealMax: 11, bbBerlebih: 11.1 },
+    { umur: 14, bbSangatKurang: 7.1, bbKurang: 8, bbIdealMin: 8.1, bbIdealMax: 11.3, bbBerlebih: 11.4 },
+    { umur: 15, bbSangatKurang: 7.3, bbKurang: 8.2, bbIdealMin: 8.3, bbIdealMax: 11.5, bbBerlebih: 11.6 },
+    { umur: 16, bbSangatKurang: 7.4, bbKurang: 8.3, bbIdealMin: 8.4, bbIdealMax: 11.7, bbBerlebih: 11.8 },
+    { umur: 17, bbSangatKurang: 7.6, bbKurang: 8.5, bbIdealMin: 8.6, bbIdealMax: 12, bbBerlebih: 12.1 },
+    { umur: 18, bbSangatKurang: 7.7, bbKurang: 8.7, bbIdealMin: 8.8, bbIdealMax: 12.2, bbBerlebih: 12.3 },
+    { umur: 19, bbSangatKurang: 7.9, bbKurang: 8.8, bbIdealMin: 8.9, bbIdealMax: 12.5, bbBerlebih: 12.6 },
+    { umur: 20, bbSangatKurang: 8, bbKurang: 9, bbIdealMin: 9.1, bbIdealMax: 12.7, bbBerlebih: 12.8 },
+    { umur: 21, bbSangatKurang: 8.1, bbKurang: 9.1, bbIdealMin: 9.2, bbIdealMax: 12.9, bbBerlebih: 13 },
+    { umur: 22, bbSangatKurang: 8.3, bbKurang: 9.3, bbIdealMin: 9.4, bbIdealMax: 13.2, bbBerlebih: 13.3 },
+    { umur: 23, bbSangatKurang: 8.4, bbKurang: 9.4, bbIdealMin: 9.5, bbIdealMax: 13.4, bbBerlebih: 13.5 },
+    { umur: 24, bbSangatKurang: 8.5, bbKurang: 9.6, bbIdealMin: 9.7, bbIdealMax: 13.6, bbBerlebih: 13.7 },
+    { umur: 25, bbSangatKurang: 8.7, bbKurang: 9.7, bbIdealMin: 9.8, bbIdealMax: 13.9, bbBerlebih: 14 },
+    { umur: 26, bbSangatKurang: 8.8, bbKurang: 9.9, bbIdealMin: 10, bbIdealMax: 14.1, bbBerlebih: 14.2 },
+    { umur: 27, bbSangatKurang: 8.9, bbKurang: 10, bbIdealMin: 10.1, bbIdealMax: 14.3, bbBerlebih: 14.4 },
+    { umur: 28, bbSangatKurang: 9, bbKurang: 10.1, bbIdealMin: 10.2, bbIdealMax: 14.5, bbBerlebih: 14.6 },
+    { umur: 29, bbSangatKurang: 9.1, bbKurang: 10.3, bbIdealMin: 10.4, bbIdealMax: 14.8, bbBerlebih: 14.9 },
+    { umur: 30, bbSangatKurang: 9.3, bbKurang: 10.4, bbIdealMin: 10.5, bbIdealMax: 15, bbBerlebih: 15.1 },
+    { umur: 31, bbSangatKurang: 9.4, bbKurang: 10.6, bbIdealMin: 10.7, bbIdealMax: 15.2, bbBerlebih: 15.3 },
+    { umur: 32, bbSangatKurang: 9.5, bbKurang: 10.7, bbIdealMin: 10.8, bbIdealMax: 15.4, bbBerlebih: 15.5 },
+    { umur: 33, bbSangatKurang: 9.6, bbKurang: 10.8, bbIdealMin: 10.9, bbIdealMax: 15.6, bbBerlebih: 15.7 },
+    { umur: 34, bbSangatKurang: 9.7, bbKurang: 10.9, bbIdealMin: 11, bbIdealMax: 15.8, bbBerlebih: 15.9 },
+    { umur: 35, bbSangatKurang: 9.8, bbKurang: 11.1, bbIdealMin: 11.2, bbIdealMax: 16, bbBerlebih: 16.1 },
+    { umur: 36, bbSangatKurang: 9.9, bbKurang: 11.2, bbIdealMin: 11.3, bbIdealMax: 16.2, bbBerlebih: 16.3 },
+    { umur: 37, bbSangatKurang: 10, bbKurang: 11.3, bbIdealMin: 11.4, bbIdealMax: 16.4, bbBerlebih: 16.5 },
+    { umur: 38, bbSangatKurang: 10.1, bbKurang: 11.4, bbIdealMin: 11.5, bbIdealMax: 16.6, bbBerlebih: 16.7 },
+    { umur: 39, bbSangatKurang: 10.2, bbKurang: 11.5, bbIdealMin: 11.6, bbIdealMax: 16.8, bbBerlebih: 16.9 },
+    { umur: 40, bbSangatKurang: 10.3, bbKurang: 11.7, bbIdealMin: 11.8, bbIdealMax: 17, bbBerlebih: 17.1 },
+    { umur: 41, bbSangatKurang: 10.4, bbKurang: 11.8, bbIdealMin: 11.9, bbIdealMax: 17.2, bbBerlebih: 17.3 },
+    { umur: 42, bbSangatKurang: 10.5, bbKurang: 11.9, bbIdealMin: 12, bbIdealMax: 17.4, bbBerlebih: 17.5 },
+    { umur: 43, bbSangatKurang: 10.6, bbKurang: 12, bbIdealMin: 12.1, bbIdealMax: 17.6, bbBerlebih: 17.7 },
+    { umur: 44, bbSangatKurang: 10.7, bbKurang: 12.1, bbIdealMin: 12.2, bbIdealMax: 17.8, bbBerlebih: 17.9 },
+    { umur: 45, bbSangatKurang: 10.8, bbKurang: 12.3, bbIdealMin: 12.4, bbIdealMax: 18, bbBerlebih: 18.1 },
+    { umur: 46, bbSangatKurang: 10.9, bbKurang: 12.4, bbIdealMin: 12.5, bbIdealMax: 18.2, bbBerlebih: 18.3 },
+    { umur: 47, bbSangatKurang: 11, bbKurang: 12.5, bbIdealMin: 12.6, bbIdealMax: 18.4, bbBerlebih: 18.5 },
+    { umur: 48, bbSangatKurang: 11.1, bbKurang: 12.6, bbIdealMin: 12.7, bbIdealMax: 18.6, bbBerlebih: 18.7 },
+    { umur: 49, bbSangatKurang: 11.2, bbKurang: 12.7, bbIdealMin: 12.8, bbIdealMax: 18.8, bbBerlebih: 18.9 },
+    { umur: 50, bbSangatKurang: 11.3, bbKurang: 12.8, bbIdealMin: 12.9, bbIdealMax: 19, bbBerlebih: 19.1 },
+    { umur: 51, bbSangatKurang: 11.4, bbKurang: 13, bbIdealMin: 13.1, bbIdealMax: 19.2, bbBerlebih: 19.3 },
+    { umur: 52, bbSangatKurang: 11.5, bbKurang: 13.1, bbIdealMin: 13.2, bbIdealMax: 19.4, bbBerlebih: 19.5 },
+    { umur: 53, bbSangatKurang: 11.6, bbKurang: 13.2, bbIdealMin: 13.3, bbIdealMax: 19.6, bbBerlebih: 19.7 },
+    { umur: 54, bbSangatKurang: 11.7, bbKurang: 13.3, bbIdealMin: 13.4, bbIdealMax: 19.8, bbBerlebih: 19.9 },
+    { umur: 55, bbSangatKurang: 11.8, bbKurang: 13.4, bbIdealMin: 13.5, bbIdealMax: 20, bbBerlebih: 20.1 },
+    { umur: 56, bbSangatKurang: 11.9, bbKurang: 13.5, bbIdealMin: 13.6, bbIdealMax: 20.2, bbBerlebih: 20.3 },
+    { umur: 57, bbSangatKurang: 12, bbKurang: 13.6, bbIdealMin: 13.7, bbIdealMax: 20.4, bbBerlebih: 20.5 },
+    { umur: 58, bbSangatKurang: 12.1, bbKurang: 13.7, bbIdealMin: 13.8, bbIdealMax: 20.6, bbBerlebih: 20.7 },
+    { umur: 59, bbSangatKurang: 12.2, bbKurang: 13.9, bbIdealMin: 14, bbIdealMax: 20.8, bbBerlebih: 20.9 },
+    { umur: 60, bbSangatKurang: 12.3, bbKurang: 14, bbIdealMin: 14.1, bbIdealMax: 21, bbBerlebih: 21.1 }
+];
 
         const weightDataPerempuan = [
             { umur: 0, bbSangatKurang: 2, bbKurang: 2.3, bbIdealMin: 2.4, bbIdealMax: 3.7, bbBerlebih: 3.8 },
@@ -396,7 +448,7 @@
                 status = 'Berat Badan Sangat Kurang';
                 statusClass = 'status-sangat-kurang';
                 recommendation = '🚨 URGENT: Segera konsultasi ke dokter anak atau ahli gizi untuk penanganan malnutrisi berat.';
-            } else if (weight < threshold.bbKurang) {
+            } else if (weight <= threshold.bbKurang) {
                 status = 'Berat Badan Kurang';
                 statusClass = 'status-kurang';
                 recommendation = '📋 Perlu peningkatan asupan gizi. Konsultasi dengan ahli gizi untuk program peningkatan berat badan.';
