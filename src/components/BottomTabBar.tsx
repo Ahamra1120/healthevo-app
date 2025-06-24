@@ -8,8 +8,7 @@ interface BottomTabBarProps {
   navigation: any;
 }
 
-const BottomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
-  const getTabIcon = (routeName: string, isFocused: boolean) => {
+const BottomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {  const getTabIcon = (routeName: string, isFocused: boolean) => {
     let icon = '';
     
     switch (routeName) {
@@ -18,6 +17,9 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigat
         break;
       case 'NutritionTracker':
         icon = '🍎';
+        break;
+      case 'KMS':
+        icon = '📊';
         break;
       case 'HealthTips':
         icon = '💡';
@@ -34,13 +36,14 @@ const BottomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigat
     
     return icon;
   };
-
   const getTabLabel = (routeName: string) => {
     switch (routeName) {
       case 'Home':
         return 'Beranda';
       case 'NutritionTracker':
         return 'Nutrisi';
+      case 'KMS':
+        return 'KMS';
       case 'HealthTips':
         return 'Tips';
       case 'Services':

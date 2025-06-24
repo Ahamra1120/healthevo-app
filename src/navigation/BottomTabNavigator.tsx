@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabParamList } from './types';
 import HomeScreen from '../screens/Dashboard/Home';
 import NutritionTrackerScreen from '../screens/Dashboard/NutritionTracker';
+import KMSScreen from '../screens/Dashboard/KMS';
 import HealthTipsScreen from '../screens/Dashboard/HealthTips';
 import ServicesScreen from '../screens/Dashboard/Services';
 import ProfileScreen from '../screens/Dashboard/Profile';
@@ -25,10 +26,10 @@ const BottomTabNavigator = () => {
       tabBar={(props) => <BottomTabBar {...props} />}
       screenOptions={{
         headerShown: false,
-      }}
-    >
+      }}    >
       <Tab.Screen name="Home" component={withSafeArea(HomeScreen)} />
       <Tab.Screen name="NutritionTracker" component={withSafeArea(NutritionTrackerScreen)} />
+      <Tab.Screen name="KMS" component={withSafeArea(KMSScreen)} />
       <Tab.Screen name="HealthTips" component={withSafeArea(HealthTipsScreen)} />
       <Tab.Screen name="Services" component={withSafeArea(ServicesScreen)} />
       <Tab.Screen name="Profile" component={withSafeArea(ProfileScreen)} />

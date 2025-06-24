@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMS - Kartu Menuju Sehat</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .input-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .chart-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .analysis {
+            background: #e8f5e8;
+            border-left: 4px solid #4CAF50;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .analysis h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .analysis p {
+            line-height: 1.6;
+            color: #1b5e20;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .status-ideal { background: #c8e6c9; color: #2e7d32; }
+        .status-kurang { background: #ffcc02; color: #f57f17; }
+        .status-sangat-kurang { background: #ffcdd2; color: #d32f2f; }
+        .status-berlebih { background: #bbdefb; color: #1976d2; }
+        .status-stunting { background: #ffcdd2; color: #d32f2f; }
+        .status-terindikasi { background: #fff3c4; color: #f57f17; }
+        .status-tinggi { background: #bbdefb; color: #1976d2; }
+
+        .info-box {
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .info-box h4 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #1565c0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Kartu Menuju Sehat</h1>
+            <p>Pantau pertumbuhan anak dengan standar KMS Indonesia</p>
+        </div>
+
+        <div class="main-content">
+            <div class="input-section">
+                <h2>Data Anak</h2>
+                
+                <div class="form-group">
+                    <label>Jenis Kelamin:</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="laki" name="gender" value="laki" checked>
+                            <label for="laki">👦 Laki-laki</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="perempuan" name="gender" value="perempuan">
+                            <label for="perempuan">👧 Perempuan</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Jenis Analisis:</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="weight" name="chartType" value="weight" checked>
+                            <label for="weight">⚖️ Berat Badan</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="height" name="chartType" value="height">
+                            <label for="height">📏 Tinggi Badan</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Umur Anak (bulan):</label>
+                    <input type="number" id="age" min="0" max="60" placeholder="Contoh: 24">
+                    <small>Rentang: 0-60 bulan (0-5 tahun)</small>
+                </div>
+
+                <div class="form-group" id="weightGroup">
+                    <label for="weight-input">Berat Badan (kg):</label>
+                    <input type="number" id="weight-input" step="0.1" placeholder="Contoh: 12.5">
+                    <small>Dalam kilogram (kg)</small>
+                </div>
+
+                <div class="form-group" id="heightGroup" style="display: none;">
+                    <label for="height-input">Tinggi Badan (cm):</label>
+                    <input type="number" id="height-input" step="0.1" placeholder="Contoh: 85.5">
+                    <small>Dalam sentimeter (cm)</small>
+                </div>
+
+                <button class="btn" onclick="analyzeGrowth()">📈 Analisis Pertumbuhan</button>
+
+                <div class="info-box">
+                    <h4>ℹ️ Tentang KMS</h4>
+                    <p>Kartu Menuju Sehat (KMS) adalah alat untuk memantau pertumbuhan anak berdasarkan standar WHO dan Kementerian Kesehatan Indonesia. Grafik menunjukkan kurva pertumbuhan normal dan membantu deteksi dini masalah gizi.</p>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <h2 id="chartTitle">Grafik Pertumbuhan</h2>
+                <div class="chart-container">
+                    <canvas id="kmsChart"></canvas>
+                </div>
+                <div class="legend" id="chartLegend"></div>
+                <div id="analysisResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data KMS untuk Berat Badan
+        const weightDataLaki = [
+            { umur: 0, bbSangatKurang: 2, bbKurang: 2.4, bbIdealMin: 2.5, bbIdealMax: 3.9, bbBerlebih: 4 },
+            { umur: 3, bbSangatKurang: 4.3, bbKurang: 4.9, bbIdealMin: 5, bbIdealMax: 7.2, bbBerlebih: 7.3 },
+            { umur: 6, bbSangatKurang: 5.6, bbKurang: 6.3, bbIdealMin: 6.4, bbIdealMax: 8.8, bbBerlebih: 8.9 },
+            { umur: 12, bbSangatKurang: 6.8, bbKurang: 7.6, bbIdealMin: 7.7, bbIdealMax: 10.8, bbBerlebih: 10.9 },
+            { umur: 18, bbSangatKurang: 7.7, bbKurang: 8.7, bbIdealMin: 8.8, bbIdealMax: 12.2, bbBerlebih: 12.3 },
+            { umur: 24, bbSangatKurang: 8.5, bbKurang: 9.6, bbIdealMin: 9.7, bbIdealMax: 13.6, bbBerlebih: 13.7 },
+            { umur: 36, bbSangatKurang: 9.9, bbKurang: 11.2, bbIdealMin: 11.3, bbIdealMax: 16.2, bbBerlebih: 16.3 },
+            { umur: 48, bbSangatKurang: 11.1, bbKurang: 12.6, bbIdealMin: 12.7, bbIdealMax: 18.6, bbBerlebih: 18.7 },
+            { umur: 60, bbSangatKurang: 12.3, bbKurang: 14, bbIdealMin: 14.1, bbIdealMax: 21, bbBerlebih: 21.1 }
+        ];
+
+        const weightDataPerempuan = [
+            { umur: 0, bbSangatKurang: 2, bbKurang: 2.3, bbIdealMin: 2.4, bbIdealMax: 3.7, bbBerlebih: 3.8 },
+            { umur: 3, bbSangatKurang: 4, bbKurang: 4.4, bbIdealMin: 4.5, bbIdealMax: 6.6, bbBerlebih: 6.7 },
+            { umur: 6, bbSangatKurang: 5.1, bbKurang: 5.6, bbIdealMin: 5.7, bbIdealMax: 8.2, bbBerlebih: 8.3 },
+            { umur: 12, bbSangatKurang: 6.3, bbKurang: 6.9, bbIdealMin: 7, bbIdealMax: 10.1, bbBerlebih: 10.2 },
+            { umur: 18, bbSangatKurang: 7.2, bbKurang: 8, bbIdealMin: 8.1, bbIdealMax: 11.6, bbBerlebih: 11.7 },
+            { umur: 24, bbSangatKurang: 8.1, bbKurang: 8.9, bbIdealMin: 9, bbIdealMax: 13, bbBerlebih: 13.1 },
+            { umur: 36, bbSangatKurang: 9.6, bbKurang: 10.7, bbIdealMin: 10.8, bbIdealMax: 15.8, bbBerlebih: 15.9 },
+            { umur: 48, bbSangatKurang: 10.9, bbKurang: 12.2, bbIdealMin: 12.3, bbIdealMax: 18.5, bbBerlebih: 18.6 },
+            { umur: 60, bbSangatKurang: 12.1, bbKurang: 13.6, bbIdealMin: 13.7, bbIdealMax: 21.2, bbBerlebih: 21.3 }
+        ];
+
+        // Data KMS untuk Tinggi Badan
+        const heightDataLaki = [
+            { umur: 0, tbStunting: 44.2, tbTerindikasi: 46, tbIdealMin: 46.1, tbIdealMax: 55.6, tbTinggi: 55.7 },
+            { umur: 6, tbStunting: 61.2, tbTerindikasi: 63.2, tbIdealMin: 63.3, tbIdealMax: 74, tbTinggi: 74.1 },
+            { umur: 12, tbStunting: 68.6, tbTerindikasi: 70.9, tbIdealMin: 71, tbIdealMax: 82.9, tbTinggi: 83 },
+            { umur: 18, tbStunting: 74.2, tbTerindikasi: 76.8, tbIdealMin: 76.9, tbIdealMax: 90.4, tbTinggi: 90.5 },
+            { umur: 24, tbStunting: 78, tbTerindikasi: 81.6, tbIdealMin: 81.7, tbIdealMax: 97, tbTinggi: 97.1 },
+            { umur: 36, tbStunting: 85, tbTerindikasi: 88.6, tbIdealMin: 88.7, tbIdealMax: 107.2, tbTinggi: 107.3 },
+            { umur: 48, tbStunting: 90.7, tbTerindikasi: 94.8, tbIdealMin: 94.9, tbIdealMax: 115.9, tbTinggi: 116 },
+            { umur: 60, tbStunting: 96.1, tbTerindikasi: 100.6, tbIdealMin: 100.7, tbIdealMax: 123.9, tbTinggi: 124 }
+        ];
+
+        const heightDataPerempuan = [
+            { umur: 0, tbStunting: 43.6, tbTerindikasi: 45.3, tbIdealMin: 45.4, tbIdealMax: 54.7, tbTinggi: 54.8 },
+            { umur: 6, tbStunting: 58.9, tbTerindikasi: 61.1, tbIdealMin: 61.2, tbIdealMax: 72.5, tbTinggi: 72.6 },
+            { umur: 12, tbStunting: 66.3, tbTerindikasi: 68.8, tbIdealMin: 68.9, tbIdealMax: 83.1, tbTinggi: 83.2 },
+            { umur: 18, tbStunting: 72, tbTerindikasi: 74.8, tbIdealMin: 74.9, tbIdealMax: 90.6, tbTinggi: 90.7 },
+            { umur: 24, tbStunting: 76.7, tbTerindikasi: 79.9, tbIdealMin: 80, tbIdealMax: 95.4, tbTinggi: 95.5 },
+            { umur: 36, tbStunting: 83.6, tbTerindikasi: 87.3, tbIdealMin: 87.4, tbIdealMax: 106.5, tbTinggi: 106.6 },
+            { umur: 48, tbStunting: 89.8, tbTerindikasi: 94, tbIdealMin: 94.1, tbIdealMax: 115.7, tbTinggi: 115.8 },
+            { umur: 60, tbStunting: 95.2, tbTerindikasi: 99.8, tbIdealMin: 99.9, tbIdealMax: 123.7, tbTinggi: 123.8 }
+        ];
+
+        let chart = null;
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartTypeInputs = document.querySelectorAll('input[name="chartType"]');
+            chartTypeInputs.forEach(input => {
+                input.addEventListener('change', toggleInputFields);
+            });
+            
+            // Initialize chart
+            updateChart();
+        });
+
+        function toggleInputFields() {
+            const chartType = document.querySelector('input[name="chartType"]:checked').value;
+            const weightGroup = document.getElementById('weightGroup');
+            const heightGroup = document.getElementById('heightGroup');
+            
+            if (chartType === 'weight') {
+                weightGroup.style.display = 'block';
+                heightGroup.style.display = 'none';
+            } else {
+                weightGroup.style.display = 'none';
+                heightGroup.style.display = 'block';
+            }
+            
+            updateChart();
+        }
+
+        function getThresholdAtAge(data, age) {
+            if (age <= 0) return data[0];
+            if (age >= 60) return data[data.length - 1];
+
+            for (let i = 0; i < data.length - 1; i++) {
+                if (age >= data[i].umur && age <= data[i + 1].umur) {
+                    const ratio = (age - data[i].umur) / (data[i + 1].umur - data[i].umur);
+                    const result = {};
+                    Object.keys(data[i]).forEach(key => {
+                        if (key !== 'umur') {
+                            result[key] = data[i][key] + ratio * (data[i + 1][key] - data[i][key]);
+                        }
+                    });
+                    result.umur = age;
+                    return result;
+                }
+            }
+            return data[0];
+        }
+
+        function analyzeWeight(weight, age, gender) {
+            const data = gender === 'laki' ? weightDataLaki : weightDataPerempuan;
+            const threshold = getThresholdAtAge(data, age);
+            
+            let status = '';
+            let recommendation = '';
+            let statusClass = '';
+
+            if (weight < threshold.bbSangatKurang) {
+                status = 'Berat Badan Sangat Kurang';
+                statusClass = 'status-sangat-kurang';
+                recommendation = '🚨 URGENT: Segera konsultasi ke dokter anak atau ahli gizi untuk penanganan malnutrisi berat.';
+            } else if (weight < threshold.bbKurang) {
+                status = 'Berat Badan Kurang';
+                statusClass = 'status-kurang';
+                recommendation = '📋 Perlu peningkatan asupan gizi. Konsultasi dengan ahli gizi untuk program peningkatan berat badan.';
+            } else if (weight >= threshold.bbIdealMin && weight <= threshold.bbIdealMax) {
+                status = 'Berat Badan Ideal';
+                statusClass = 'status-ideal';
+                recommendation = '✅ Pertahankan pola makan sehat dan seimbang. Lanjutkan pemantauan rutin.';
+            } else if (weight > threshold.bbBerlebih) {
+                status = 'Risiko Berat Badan Berlebih';
+                statusClass = 'status-berlebih';
+                recommendation = '⚠️ Perhatikan asupan kalori dan tingkatkan aktivitas fisik. Konsultasi dengan ahli gizi.';
+            }
+
+            return { status, recommendation, statusClass };
+        }
+
+        function analyzeHeight(height, age, gender) {
+            const data = gender === 'laki' ? heightDataLaki : heightDataPerempuan;
+            const threshold = getThresholdAtAge(data, age);
+            
+            let status = '';
+            let recommendation = '';
+            let statusClass = '';
+
+            if (height < threshold.tbStunting) {
+                status = 'Stunting';
+                statusClass = 'status-stunting';
+                recommendation = '🚨 URGENT: Anak mengalami stunting. Segera konsultasi ke dokter anak untuk intervensi gizi intensif.';
+            } else if (height < threshold.tbTerindikasi) {
+                status = 'Terindikasi Stunting';
+                statusClass = 'status-terindikasi';
+                recommendation = '⚠️ Risiko stunting tinggi. Perbaiki asupan gizi, terutama protein dan mikronutrien.';
+            } else if (height >= threshold.tbIdealMin && height <= threshold.tbIdealMax) {
+                status = 'Tinggi Badan Ideal';
+                statusClass = 'status-ideal';
+                recommendation = '✅ Tinggi badan normal. Pertahankan asupan gizi seimbang dan aktivitas fisik.';
+            } else if (height > threshold.tbTinggi) {
+                status = 'Tinggi Badan Lebih';
+                statusClass = 'status-tinggi';
+                recommendation = '📈 Tinggi badan di atas rata-rata. Pantau perkembangan secara rutin.';
+            }
+
+            return { status, recommendation, statusClass };
+        }
+
+        function updateChart() {
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const chartType = document.querySelector('input[name="chartType"]:checked').value;
+            
+            let data, title, yAxisLabel;
+            
+            if (chartType === 'weight') {
+                data = gender === 'laki' ? weightDataLaki : weightDataPerempuan;
+                title = `Grafik Berat Badan - ${gender === 'laki' ? 'Laki-laki' : 'Perempuan'}`;
+                yAxisLabel = 'Berat Badan (kg)';
+            } else {
+                data = gender === 'laki' ? heightDataLaki : heightDataPerempuan;
+                title = `Grafik Tinggi Badan - ${gender === 'laki' ? 'Laki-laki' : 'Perempuan'}`;
+                yAxisLabel = 'Tinggi Badan (cm)';
+            }
+            
+            document.getElementById('chartTitle').textContent = title;
+            
+            const ctx = document.getElementById('kmsChart').getContext('2d');
+            
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const labels = data.map(d => d.umur);
+            
+            let datasets;
+            let legendItems;
+            
+            if (chartType === 'weight') {
+                datasets = [
+                    {
+                        label: 'BB Sangat Kurang',
+                        data: data.map(d => d.bbSangatKurang),
+                        borderColor: '#ff4444',
+                        backgroundColor: 'rgba(255, 68, 68, 0.1)',
+                        fill: false
+                    },
+                    {
+                        label: 'BB Kurang',
+                        data: data.map(d => d.bbKurang),
+                        borderColor: '#ff8800',
+                        backgroundColor: 'rgba(255, 136, 0, 0.1)',
+                        fill: false
+                    },
+                    {
+                        label: 'BB Ideal (Min)',
+                        data: data.map(d => d.bbIdealMin),
+                        borderColor: '#00aa00',
+                        backgroundColor: 'rgba(0, 170, 0, 0.1)',
+                        fill: false
+                    },
+                    {
+                        label: 'BB Ideal (Max)',
+                        data: data.map(d => d.bbIdealMax),
+                        borderColor: '#00aa00',
+                        backgroundColor: 'rgba(0, 170, 0, 0.1)',
+                        fill: false
+                    },
+                    {
+                        label: 'Risiko BB Berlebih',
+                        data: data.map(d => d.bbBerlebih),
+                        borderColor: '#0088ff',
+                        backgroundColor: 'rgba(0, 136, 255, 0.1)',
+                        fill: false
+                    }
+                ];
+                
+                legendItems = [
+                    { color: '#ff4444', text: 'BB Sangat Kurang' },
+                    { color: '#ff8800', text: 'BB Kurang' },
+                    { color: '#00aa00', text: 'BB Ideal' },
+                    { color: '#0088ff', text: 'Risiko BB Berlebih' }
+                ];
+            } else {
+                datasets = [
+                    {
+                        label: 'Stunting',
+                        data: data.map(d => d.tbStunting),
+                        borderColor: '#ff4444',
+                        backgroundColor: 'rgba(255, 68, 68, 0.1)',
+                        fill: false
+                    },
+                    {
+                        label: 'Terindikasi Stunting',
+                        data: data.map(d => d.tbTerindikasi),
+                        borderColor: '#ff8800',
+                        backgroundColor: 'rgba(255, 136, 0, 0.1)',
+                        fill: false
+                    },
+                    {
+                        label: 'TB Ideal (Min)',
+                        data: data.map(d => d.tbIdealMin),
+                        borderColor: '#00aa00',
+                        backgroundColor: 'rgba(0, 170, 0, 0.1)',
+                        fill: false
+                    },
+                    {
+                        label: 'TB Ideal (Max)',
+                        data: data.map(d => d.tbIdealMax),
+                        borderColor: '#00aa00',
+                        backgroundColor: 'rgba(0, 170, 0, 0.1)',
+                        fill: false
+                    },
+                    {
+                        label: 'TB Tinggi',
+                        data: data.map(d => d.tbTinggi),
+                        borderColor: '#0088ff',
+                        backgroundColor: 'rgba(0, 136, 255, 0.1)',
+                        fill: false
+                    }
+                ];
+                
+                legendItems = [
+                    { color: '#ff4444', text: 'Stunting' },
+                    { color: '#ff8800', text: 'Terindikasi Stunting' },
+                    { color: '#00aa00', text: 'TB Ideal' },
+                    { color: '#0088ff', text: 'TB Tinggi' }
+                ];
+            }
+            
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Umur (bulan)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: yAxisLabel
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+            
+            // Update legend
+            const legendElement = document.getElementById('chartLegend');
+            legendElement.innerHTML = legendItems.map(item => 
+                `<div class="legend-item">
+                    <div class="legend-color" style="background-color: ${item.color}"></div>
+                    <span>${item.text}</span>
+                </div>`
+            ).join('');
+        }
+
+        function analyzeGrowth() {
+            const age = parseInt(document.getElementById('age').value);
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const chartType = document.querySelector('input[name="chartType"]:checked').value;
+            
+            if (!age || age < 0 || age > 60) {
+                alert('Umur harus antara 0-60 bulan');
+                return;
+            }
+            
+            let value, analysis;
+            
+            if (chartType === 'weight') {
+                value = parseFloat(document.getElementById('weight-input').value);
+                if (!value || value <= 0) {
+                    alert('Berat badan harus diisi dan lebih dari 0');
+                    return;
+                }
+                analysis = analyzeWeight(value, age, gender);
+            } else {
+                value = parseFloat(document.getElementById('height-input').value);
+                if (!value || value <= 0) {
+                    alert('Tinggi badan harus diisi dan lebih dari 0');
+                    return;
+                }
+                analysis = analyzeHeight(value, age, gender);
+            }
+            
+            // Add child's data point to chart
+            const childDataset = {
+                label: 'Data Anak',
+                data: [{x: age, y: value}],
+                borderColor: '#ff0000',
+                backgroundColor: '#ff0000',
+                pointRadius: 8,
+                pointHoverRadius: 10,
+                showLine: false
+            };
+            
+            chart.data.datasets.push(childDataset);
+            chart.update();
+            
+            // Update legend to include child's data
+            const legendElement = document.getElementById('chartLegend');
+            legendElement.innerHTML += `
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #ff0000"></div>
+                    <span>Data Anak</span>
+                </div>`;
+            
+            // Show analysis result
+            const resultElement = document.getElementById('analysisResult');
+            resultElement.innerHTML = `
+                <div class="analysis">
+                    <h3>Hasil Analisis</h3>
+                    <div class="status-badge ${analysis.statusClass}">${analysis.status}</div>
+                    <p><strong>Data:</strong> Umur ${age} bulan, ${chartType === 'weight' ? 'BB' : 'TB'} ${value} ${chartType === 'weight' ? 'kg' : 'cm'}</p>
+                    <p><strong>Rekomendasi:</strong> ${analysis.recommendation}</p>
+                </div>
+            `;
+            
+            // Scroll to result
+            resultElement.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

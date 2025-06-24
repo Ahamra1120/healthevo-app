@@ -11,6 +11,7 @@ export type AuthStackParamList = {
 export type BottomTabParamList = {
   Home: undefined;
   NutritionTracker: undefined;
+  KMS: undefined;
   HealthTips: undefined;
   Services: undefined;
   Profile: undefined;
