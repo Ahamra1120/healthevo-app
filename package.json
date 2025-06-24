@@ -7,7 +7,8 @@
     "start:dev": "expo start --dev-client",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "test-kms": "node -e \"console.log('🧪 Starting KMS Testing...'); require('child_process').exec('test-kms.bat', (err, stdout) => { if (err) console.error(err); else console.log(stdout); });\""
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.4.0",

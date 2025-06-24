@@ -42,6 +42,41 @@ Aplikasi ini bertujuan untuk:
 - Pengaturan notifikasi
 - FAQ dan bantuan
 
+### 📊 Kartu Menuju Sehat (KMS)
+- Grafik pertumbuhan anak berdasarkan standar WHO dan Kemenkes RI
+- Analisis berat badan dan tinggi badan dengan threshold zones
+- Deteksi dini stunting dan risiko obesitas
+- Rekomendasi berdasarkan hasil analisis pertumbuhan
+- Support untuk anak laki-laki dan perempuan (0-60 bulan)
+- Interpolasi data untuk akurasi analisis di semua umur
+
+## 📊 Fitur Kartu Menuju Sehat (KMS)
+
+Fitur KMS adalah salah satu fitur unggulan HealthEvo yang memungkinkan pemantauan pertumbuhan anak berdasarkan standar WHO dan Kementerian Kesehatan Indonesia.
+
+### Keunggulan Fitur KMS:
+- **Data Akurat**: Berdasarkan data standar KMS Indonesia dari CSV resmi
+- **Grafik Interaktif**: Visualisasi pertumbuhan dengan grafik titik dan kurva threshold
+- **Analisis Otomatis**: Deteksi status gizi dan pertumbuhan dengan algoritma interpolasi
+- **Rekomendasi**: Saran tindakan berdasarkan hasil analisis
+- **Multi-Platform**: Tersedia di mobile app dan web test version
+
+### Cara Menggunakan:
+1. Buka tab "KMS" di aplikasi
+2. Pilih jenis kelamin anak
+3. Pilih jenis analisis (Berat Badan/Tinggi Badan)
+4. Masukkan umur anak (0-60 bulan)
+5. Masukkan data berat/tinggi badan
+6. Lihat hasil grafik dan analisis
+
+### Testing KMS di Web:
+```bash
+# Buka file kms-web-test.html di browser
+open kms-web-test.html
+```
+
+Untuk dokumentasi lengkap fitur KMS, lihat: [KMS_DOCUMENTATION.md](./KMS_DOCUMENTATION.md)
+
 ## 🛠 Teknologi yang Digunakan
 
 ### Frontend & Mobile
@@ -54,6 +89,8 @@ Aplikasi ini bertujuan untuk:
 - **React Native StyleSheet** - Styling components
 - **Expo Vector Icons** - Icon set lengkap
 - **Custom Color Scheme** - Tema hijau yang ramah dan menenangkan
+- **React Native Chart Kit** - Library untuk grafik dan chart KMS
+- **React Native SVG** - Support untuk grafik vektor dan chart
 
 ## 📱 Cara Menjalankan Aplikasi
 
@@ -182,13 +219,14 @@ type Child = {
 - ✅ Nutrition tracker
 - ✅ Health tips dan education
 - ✅ Healthcare services directory
+- ✅ Kartu Menuju Sehat (KMS) dengan grafik pertumbuhan
 
 ### Phase 2 (Next)
-- 📊 Growth charts dan analytics
-- 📅 Appointment scheduling
+-  Appointment scheduling
 - 🔔 Smart notifications
 - 📱 Offline mode
 - 🌐 Multi-language support
+- 📈 KMS history dan tracking multiple measurements
 
 ### Phase 3 (Future)
 - 🏥 Integration dengan healthcare providers
